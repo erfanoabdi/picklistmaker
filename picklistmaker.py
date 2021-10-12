@@ -30,7 +30,7 @@ for project in projects:
 for project in projects:
     print("## Project: {}\n".format(project))
 
-    for change in changes[project]:
+    for change in dict(sorted(changes[project].items(), key=lambda item: item[0])):
         print("repopick {} # {}".format(change, changes[project][change]))
 
     print("")
