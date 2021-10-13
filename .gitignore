@@ -131,4 +131,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+querystring.txt
 changes.json
+picklist.txt

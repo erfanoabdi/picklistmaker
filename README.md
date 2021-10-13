@@ -1,10 +1,12 @@
 # Picklist Maker
 
-## Usage:
-Generate json of commits you need from gerrit to changes.json file and run the tool  
-(here's example for all open commits on lineage-19.0 branch of lineage gerrit)
+## Usage
 
 ```
-ssh -p 29418 <username>@review.lineageos.org gerrit query branch:lineage-19.0 status:open --format=JSON > changes.json
-./picklistmaker.py
+# Generate query string from manifests
+python querymaker.py ./manifests LineageOS lineage-19.0 > querystring.txt
+# Generate JSON of commits to pick
+ssh -p 29418 <username>@review.lineageos.org gerrit query $(cat querystring.txt) --format=JSON > changes.json
+# Generate pretty picklist
+python picklistmaker.py > picklist.txt
 ```
