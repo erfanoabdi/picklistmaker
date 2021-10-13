@@ -7,6 +7,7 @@ parser = argparse.ArgumentParser(description='Generate Gerrit query string from 
 parser.add_argument("manifests_path", help="The path containing manifest XMLs")
 parser.add_argument("organization", help="The organization name, e.g. LineageOS")
 parser.add_argument("branch", help="The branch name, e.g. lineage-19.0")
+parser.add_argument("-e", "--exclude", nargs="+", type=int, help="Exclude specified change IDs")
 args = parser.parse_args()
 
 query_string = 'status:open branch:' + args.branch + ' '
@@ -32,6 +33,9 @@ for m in manifests:
                     'groups' not in p.attrib or (
                     p.attrib['groups'] != 'infra' and p.attrib['groups'] != 'tools')):
                 query_string += 'project:' + p.attrib['name'] + ' OR '
-
 query_string = query_string.rstrip(' OR ') + ')'
+
+for id in args.exclude:
+    query_string += ' NOT ' + str(id)
+
 print(query_string)
