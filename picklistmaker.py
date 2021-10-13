@@ -27,10 +27,12 @@ for project in projects:
 
     changes[project] = change
 
+print("#!/bin/bash\n\n# Abort early on error\nset -eE\n")
+
 for project in projects:
     print("## Project: {}\n".format(project))
 
     for change in dict(sorted(changes[project].items(), key=lambda item: item[0])):
-        print("repopick {} # {}".format(change, changes[project][change]))
+        print("./vendor/lineage/build/tools/repopick.py {} # {}".format(change, changes[project][change]))
 
     print("")
